@@ -148,6 +148,9 @@ process.on('SIGHUP', handle);
 // is 'resized' on most platforms (but not all)
 process.on('SIGWINCH', handle);
 
+function windowWasReseized() {
+	console.log("The window was resized");
+}
 
 
 
@@ -161,6 +164,7 @@ class Application
 	constructor(ExecutablePath = undefined, CommandLineArguments = undefined)
 		{
 		console.log(CommandLineArguments);
+	
 		}
 
 	}
@@ -171,7 +175,13 @@ class Application
 // node programs, such as, this program, calls that program. 
 // The second element will be the path to the JavaScript file being executed. 
 // The remaining elements will be any additional command-line arguments.
-for (let paramIndex = 0; paramIndex < process.argv.length; paramIndex++)
-	{
 
+
+let listOfArguments = []
+
+for (let i = 2; i < process.argv.length; i++)
+{
+	listOfArguments.push(process.argv[i]);
 	}
+
+let ourApplication = new Application(process.argv[0], listOfArguments)
